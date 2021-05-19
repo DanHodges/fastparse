@@ -10,7 +10,7 @@ import $ivy.`de.tototec::de.tobiasroeser.mill.vcs.version_mill0.9:0.1.1`
 import de.tobiasroeser.mill.vcs.version.VcsVersion
 
 val crossVersions = Seq("2.13.4", "2.12.13", "2.11.12")
-val crossJsVersions = Seq("2.13.4" -> "1.4.0", "2.12.13" -> "1.4.0", "2.11.12" -> "1.4.0")
+val crossJsVersions = Seq("2.13.4" -> "1.5.1", "2.12.13" -> "1.5.1", "2.11.12" -> "1.5.1")
 val crossNativeVersions = Seq("2.13.4" -> "0.4.0", "2.12.13" -> "0.4.0", "2.11.12" -> "0.4.0")
 
 object fastparse extends Module{
@@ -139,8 +139,7 @@ trait ExampleParseJvmModule extends CommonCrossModule{
     def platformSegment = "jvm"
     def ivyDeps = super.ivyDeps() ++ Agg(
       ivy"net.sourceforge.cssparser:cssparser:0.9.18",
-      ivy"org.scala-lang:scala-compiler:${scalaVersion()}"
-    )
+    ) ++ (if (isScala3(crossScalaVersion)) Agg.empty[Dep] else Agg(ivy"org.scala-lang:scala-compiler:${scalaVersion()}"))
   }
 }
 
@@ -252,13 +251,13 @@ object perftests extends Module{
 }
 
 object demo extends ScalaJSModule{
-  def scalaJSVersion = "1.4.0"
+  def scalaJSVersion = "1.5.1"
   def scalaVersion = "2.13.1"
   def moduleDeps = Seq(
-    scalaparse.js("2.13.4", "1.4.0"),
-    cssparse.js("2.13.4", "1.4.0"),
-    pythonparse.js("2.13.4", "1.4.0"),
-    fastparse.js("2.13.4", "1.4.0").test,
+    scalaparse.js("2.13.4", "1.5.1"),
+    cssparse.js("2.13.4", "1.5.1"),
+    pythonparse.js("2.13.4", "1.5.1"),
+    fastparse.js("2.13.4", "1.5.1").test,
   )
   def ivyDeps = Agg(
     ivy"org.scala-js::scalajs-dom::0.9.8",
