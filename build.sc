@@ -184,7 +184,7 @@ trait CommonCrossModule extends CrossScalaModule with PublishModule{
     ).map(PathRef(_))
   }
 }
-trait CommonTestModule extends ScalaModule with TestModule{
+trait CommonTestModule extends ScalaModule with TestModule.Utest{
 
   def platformSegment: String
   def ivyDeps = Agg(
@@ -237,16 +237,15 @@ object perftests extends Module{
     )
   }
 
-  trait PerfTestModule extends ScalaModule with TestModule{
+  trait PerfTestModule extends ScalaModule with TestModule.Utest{
     def scalaVersion = "2.12.13"
     def scalacOptions = Seq("-opt:l:method")
     def resources = T.sources{
       Seq(PathRef(perftests.millSourcePath / "resources")) ++
         fastparse.jvm("2.12.13").test.resources()
     }
-    def testFrameworks = Seq("utest.runner.Framework")
     def ivyDeps = Agg(
-      ivy"com.lihaoyi::utest::0.7.7",
+      ivy"com.lihaoyi::utest::0.7.10",
       ivy"org.scala-lang:scala-compiler:${scalaVersion()}"
     )
   }
