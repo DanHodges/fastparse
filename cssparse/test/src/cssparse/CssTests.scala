@@ -52,6 +52,7 @@ object CssTests extends TestSuite {
             |  font-family: sans-serif;
             |  -webkit-text-size-adjust: 100%;
             |      -ms-text-size-adjust: 100%;
+            |  /* test comment */
             |}
             |
           """.stripMargin, CssRulesParser.ruleList(_))
@@ -65,7 +66,7 @@ object CssTests extends TestSuite {
                   Left(Declaration("font-family", Seq(IdentToken("sans-serif")), false)),
                   Left(Declaration("-webkit-text-size-adjust", Seq(PercentageToken("100")), false)),
                   Left(Declaration("-ms-text-size-adjust", Seq(PercentageToken("100")), false))))))),
-          index2 == 363
+          index2 == 384
         )
       }
 
